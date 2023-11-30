@@ -1,3 +1,3 @@
-
-import { getPhoto } from './modules/create-pictures.js';
-getPhoto();
+import { renderPictures } from './miniature.js';
+import { getPhoto } from './data.js';
+renderPictures(getPhoto());
