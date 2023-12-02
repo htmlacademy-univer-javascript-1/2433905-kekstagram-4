@@ -1,5 +1,16 @@
+import { showBigPicture } from './fullSizePicture';
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesList = document.querySelector('.pictures');
+const pictures = null;
+
+const onPicturesContainerClick = (evt) => {
+  const targetElement = evt.target.closest('.picture');
+  if (targetElement) {
+    const id = targetElement.dataset.pictureId;
+    const [thumbnail] = pictures.filter((picture) => picture.id === +id);
+    showBigPicture(thumbnail);
+  }
+};
 
 const createThumbnail = ({url, description, likes, comments}) => {
   const thumbnail = thumbnailTemplate.cloneNode(true);
@@ -10,12 +21,14 @@ const createThumbnail = ({url, description, likes, comments}) => {
   return thumbnail;
 };
 
+
 const renderPictures = (photos) => {
   const fragment = document.createDocumentFragment();
   photos.forEach((photo) => {
     fragment.appendChild(createThumbnail(photo));
   });
   picturesList.appendChild(fragment);
+  picturesList.addEventListener('click', onPicturesContainerClick);
 };
 
 export { renderPictures };
