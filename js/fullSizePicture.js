@@ -1,4 +1,5 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './utils.js';
+const COMMENTS_STEP = 5;
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const pictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
@@ -7,50 +8,47 @@ const commentsList = bigPicture.querySelector('.social__comments');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
-const COMMENTS_STEP = 5;
-const commentTemplate = document.querySelector('#comments').content.querySelector('li');
+const commentTemplate = document.querySelector('.social__comment');
 const commentsCounter = bigPicture.querySelector('.social__comment-count');
 
 let shownCommentsCount = COMMENTS_STEP;
 let commentsArray = [];
 
 const createComment = (comment) => {
-  const {avatar, name, message} = comment;
+  const { avatar, name, message } = comment;
   const currentComment = commentTemplate.cloneNode(true);
 
   currentComment.querySelector('.social__picture').src = avatar;
   currentComment.querySelector('.social__picture').alt = name;
   currentComment.querySelector('.social__text').textContent = message;
-
-
   return currentComment;
+};
+
+const changeCommentCount = (currentShownCommentsCount, pictureCommentsCount) => {
+  commentsCounter.textContent = `${currentShownCommentsCount} из ${pictureCommentsCount} комментариев`;
 };
 
 
 const createComments = () => {
   commentsList.innerHTML = '';
+  commentsLoader.classList.remove('hidden');
 
-  shownCommentsCount = (shownCommentsCount > commentsArray.length) ? commentsArray.length : shownCommentsCount;
+  const fragment = document.createDocumentFragment();
+  const slicedComments = commentsArray.slice(0, shownCommentsCount);
 
-  const shownComments = commentsArray.slice(0, shownCommentsCount);
-
-  if (commentsArray.length <= COMMENTS_STEP || shownCommentsCount >= commentsArray.length) {
-    commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
+  for (const comment of slicedComments) {
+    fragment.append(createComment(comment));
   }
 
-  commentsCounter.textContent = `${shownCommentsCount} из ${commentsCount.textContent} комментариев`;
+  if (shownCommentsCount >= commentsArray.length) {
+    shownCommentsCount = commentsArray.length;
+    commentsLoader.classList.add('hidden');
 
-  const commentFragment = document.createDocumentFragment();
+    commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+  }
 
-
-  shownComments.forEach((element) => {
-
-    commentFragment.append(createComment(element));
-  });
-
-  commentsList.append(commentFragment);
+  changeCommentCount(shownCommentsCount, commentsArray.length);
+  commentsList.append(fragment);
 };
 
 const closeBigPicture = () => {
@@ -61,29 +59,29 @@ const closeBigPicture = () => {
   commentsArray = [];
 };
 
-const onCommentsLoaderClick = () => {
+function onCommentsLoaderClick(){
   shownCommentsCount += COMMENTS_STEP;
   createComments();
-};
+}
 
 const onBigPictureEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
 
     closeBigPicture();
-    document.removeEventListener('keydown', onBigPictureEscKeydown); // удаляем обработчик
+    document.removeEventListener('keydown', onBigPictureEscKeydown);
   }
 };
 
 const onBigPictureCancelClick = () => {
   closeBigPicture();
 
-  document.removeEventListener('keydown', onBigPictureEscKeydown); // удаляем обработчик эскейпа
-  pictureCloseButton.removeEventListener('click', onBigPictureCancelClick); // и обработчик клика
+  document.removeEventListener('keydown', onBigPictureEscKeydown);
+  pictureCloseButton.removeEventListener('click', onBigPictureCancelClick);
 };
 
 const showBigPicture = (picture) => {
-  const {url, description, likes, comments} = picture;
+  const { url, description, likes, comments } = picture;
 
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -92,11 +90,9 @@ const showBigPicture = (picture) => {
   bigPictureLikes.textContent = likes;
   bigPictureDescription.textContent = description;
   commentsCount.textContent = comments.length;
+  commentsArray = comments;
 
-
-  commentsArray = comments.slice();
   createComments();
-
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
