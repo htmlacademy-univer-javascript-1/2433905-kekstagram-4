@@ -27,6 +27,62 @@ const TagsErrorMessages = {
   REACHED_MAX_COUNT: 'Максимальное число хэштегов: 5'
 };
 
+const SCALE_STEP = 25;
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+const DEFAULT_SCALE = 100;
+
+const Effects = {
+  NONE: {
+    name: 'none',
+    style: 'none',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '',
+  },
+  CHROME: {
+    name: 'chrome',
+    style: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  SEPIA: {
+    name: 'sepia',
+    style: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
+  MARVIN: {
+    name: 'marvin',
+    style: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    unit: '%',
+  },
+  PHOBOS: {
+    name: 'phobos',
+    style: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    unit: 'px',
+  },
+  HEAT: {
+    name: 'heat',
+    style: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    unit: '',
+  }
+};
+
 const generateCommentId = getId();
 const generateId = createRandomId(1, COUNT_PHOTO);
 
@@ -50,4 +106,4 @@ const getPhoto = () => {
   return photo;
 };
 
-export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages };
+export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects };
