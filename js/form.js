@@ -1,4 +1,6 @@
-import { TAG_MAX_COUNT, VALID_CHARS, TagsErrorMessages } from './data.js';
+import { TAG_MAX_COUNT, VALID_CHARS, TagsErrorMessages, SubmitButtonElementText } from './data.js';
+import { resetEffects } from './effects.js';
+import { resetScale } from './scale.js';
 import { isEscapeKey } from './utils.js';
 const body = document.querySelector('body');
 const uploadFormElement = document.querySelector('.img-upload__form');
@@ -52,6 +54,8 @@ pristine.addValidator(
 const reset = () => {
   uploadFormElement.reset();
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 const hideImageModal = () => {
@@ -73,6 +77,7 @@ const documentOnKeydown = (evt) => {
 const showImageModal = () => {
   imageOverlayElement.classList.remove('hidden');
   body.classList.add('modal-open');
+  resetScale();
 
   buttonCloseOverlayElement.addEventListener('click', hideImageModal);
   document.addEventListener('keydown', documentOnKeydown);
@@ -90,4 +95,28 @@ hashtagsFieldElement.addEventListener('keydown', (evt) => {
   }
 });
 
+const blockSubmitButton = () => {
+  buttonCloseOverlayElement.disabled = true;
+  buttonCloseOverlayElement.textContent = SubmitButtonElementText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  buttonCloseOverlayElement.disabled = false;
+  buttonCloseOverlayElement.textContent = SubmitButtonElementText.IDLE;
+};
+
+const formOnSubmit = (callback) => {
+  uploadFormElement.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+
+    if (pristine.validate()) {
+      blockSubmitButton();
+      await callback(new FormData(uploadFormElement));
+      unblockSubmitButton();
+    }
+  });
+};
+
 uploadFileElement.addEventListener('input', showImageModal);
+
+export { formOnSubmit, hideImageModal };
