@@ -83,6 +83,28 @@ const Effects = {
   }
 };
 
+const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
+
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+
+const Methods = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const ServerErrorText = {
+  GET_DATA: '',
+  SEND_DATA: '',
+};
+
+const SubmitButtonElementText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 const generateCommentId = getId();
 const generateId = createRandomId(1, COUNT_PHOTO);
 
@@ -106,4 +128,4 @@ const getPhoto = () => {
   return photo;
 };
 
-export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects };
+export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects, Methods, Route, BASE_URL, ServerErrorText, SubmitButtonElementText };
