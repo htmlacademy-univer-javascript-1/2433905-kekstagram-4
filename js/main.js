@@ -4,6 +4,7 @@ import { showSuccessMessage, showErrorMessage } from './message-form.js';
 import './scale.js';
 import { formOnSubmit, hideImageModal } from './form.js';
 import './effects.js';
+import { showFilters } from './filter.js';
 
 formOnSubmit(async (data) => {
   try {
@@ -17,5 +18,6 @@ formOnSubmit(async (data) => {
 
 getData().then((data) => {
   renderPictures(data);
+  showFilters(data);
 });
 
