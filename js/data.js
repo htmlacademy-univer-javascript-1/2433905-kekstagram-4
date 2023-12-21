@@ -105,6 +105,14 @@ const SubmitButtonElementText = {
   SENDING: 'Сохраняю...'
 };
 
+const PICTURES_COUNT = 10;
+
+const Filters = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+};
+
 const generateCommentId = getId();
 const generateId = createRandomId(1, COUNT_PHOTO);
 
@@ -128,4 +136,4 @@ const getPhoto = () => {
   return photo;
 };
 
-export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects, Methods, Route, BASE_URL, ServerErrorText, SubmitButtonElementText };
+export { getPhoto, VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects, Methods, Route, BASE_URL, ServerErrorText, SubmitButtonElementText, PICTURES_COUNT, Filters };

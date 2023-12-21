@@ -34,6 +34,16 @@ function createRandomId(min, max) {
   };
 }
 
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+
 const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export { getRandomInteger, createRandomId, isEscapeKey, getId };
+export { getRandomInteger, createRandomId, isEscapeKey, getId, debounce };

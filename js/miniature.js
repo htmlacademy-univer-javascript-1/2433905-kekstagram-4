@@ -23,10 +23,18 @@ const createThumbnail = ({ id, url, description, likes, comments }) => {
   return thumbnail;
 };
 
+const clearPhotos = () => {
+  const picturesElements = document.querySelectorAll('.picture');
+  picturesElements.forEach((picture) => {
+    picture.remove();
+  });
+  pictures = [];
+};
 
 const renderPictures = (photos) => {
-  const fragment = document.createDocumentFragment();
+  clearPhotos();
   pictures = photos;
+  const fragment = document.createDocumentFragment();
   photos.forEach((photo) => {
     fragment.appendChild(createThumbnail(photo));
   });

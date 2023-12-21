@@ -43,7 +43,6 @@ const createComments = () => {
   if (shownCommentsCount >= commentsArray.length) {
     shownCommentsCount = commentsArray.length;
     commentsLoader.classList.add('hidden');
-
     commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   }
 
@@ -59,7 +58,7 @@ const closeBigPicture = () => {
   commentsArray = [];
 };
 
-function onCommentsLoaderClick(){
+function onCommentsLoaderClick() {
   shownCommentsCount += COMMENTS_STEP;
   createComments();
 }
@@ -69,15 +68,15 @@ const onBigPictureEscKeydown = (evt) => {
     evt.preventDefault();
 
     closeBigPicture();
-    document.removeEventListener('keydown', onBigPictureEscKeydown);
+    document.removeEventListener('keydown', onBigPictureEscKeydown); // удаляем обработчик
   }
 };
 
 const onBigPictureCancelClick = () => {
   closeBigPicture();
 
-  document.removeEventListener('keydown', onBigPictureEscKeydown);
-  pictureCloseButton.removeEventListener('click', onBigPictureCancelClick);
+  document.removeEventListener('keydown', onBigPictureEscKeydown); // удаляем обработчик эскейпа
+  pictureCloseButton.removeEventListener('click', onBigPictureCancelClick); // и обработчик клика
 };
 
 const showBigPicture = (picture) => {
