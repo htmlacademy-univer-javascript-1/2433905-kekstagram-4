@@ -1,10 +1,10 @@
-function getRandomInteger(min, max) {
+const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
 const getId = () => {
   let lastGeneratedId = 0;
@@ -15,7 +15,7 @@ const getId = () => {
   };
 };
 
-function createRandomId(min, max) {
+const createRandomId = (min, max) => {
   const previousValues = [];
 
   return function () {
@@ -32,7 +32,7 @@ function createRandomId(min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
@@ -42,7 +42,6 @@ const debounce = (callback, timeoutDelay = 500) => {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
-
 
 const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 

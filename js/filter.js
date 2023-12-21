@@ -1,4 +1,4 @@
-import { Filters, PICTURES_COUNT } from './data.js';
+import { Filters, PICTURES_COUNT } from './constants.js';
 import { renderPictures } from './miniature.js';
 import { debounce } from './utils.js';
 

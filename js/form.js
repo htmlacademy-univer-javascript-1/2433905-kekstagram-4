@@ -1,4 +1,4 @@
-import { TAG_MAX_COUNT, VALID_CHARS, TagsErrorMessages, SubmitButtonElementText } from './data.js';
+import { TAG_MAX_COUNT, VALID_CHARS, TagsErrorMessages, SubmitButtonElementText, FILE_TYPES } from './constants.js';
 import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
 import { isEscapeKey } from './utils.js';
@@ -9,6 +9,8 @@ const imageOverlayElement = uploadFormElement.querySelector('.img-upload__overla
 const buttonCloseOverlayElement = uploadFormElement.querySelector('#upload-cancel');
 const hashtagsFieldElement = uploadFormElement.querySelector('.text__hashtags');
 const commentsFieldElement = uploadFormElement.querySelector('.text__description');
+const imagePreviewElement = document.querySelector('.img-upload__preview img');
+const effectsPreviewElement = document.querySelectorAll('.effects__preview');
 
 
 const pristine = new Pristine(uploadFormElement, {
@@ -118,5 +120,26 @@ const formOnSubmit = (callback) => {
 };
 
 uploadFileElement.addEventListener('input', showImageModal);
+
+const showImage = () => {
+  const file = uploadFileElement.files[0];
+  const fileName = file.name.toLowerCase();
+  const isValidType = FILE_TYPES.some((fileType) => fileName.endsWith(fileType));
+
+  if (file && isValidType) {
+    const imageUrl = URL.createObjectURL(file);
+    imagePreviewElement.src = imageUrl;
+
+    effectsPreviewElement.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url('${imageUrl}')`;
+    });
+  }
+};
+
+const uploadOnChange = () => {
+  showImage();
+};
+
+uploadFileElement.addEventListener('change', uploadOnChange);
 
 export { formOnSubmit, hideImageModal };
