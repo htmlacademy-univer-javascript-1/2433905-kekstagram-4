@@ -1,4 +1,4 @@
-import { Effects } from './data.js';
+import { Effects } from './constants.js';
 
 const imageUploadElement = document.querySelector('.img-upload');
 const imageUploadPreviewElement = imageUploadElement.querySelector('.img-upload__preview img');

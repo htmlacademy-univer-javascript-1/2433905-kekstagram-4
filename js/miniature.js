@@ -43,3 +43,4 @@ const renderPictures = (photos) => {
 };
 
 export { renderPictures };
+

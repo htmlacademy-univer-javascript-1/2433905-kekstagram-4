@@ -1,4 +1,4 @@
-import { SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE } from './data.js';
+import { SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE } from './constants.js';
 
 const imageUploadElement = document.querySelector('.img-upload');
 const scaleInputElement = imageUploadElement.querySelector('.scale__control--value');

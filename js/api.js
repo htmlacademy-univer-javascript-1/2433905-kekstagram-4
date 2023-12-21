@@ -1,4 +1,4 @@
-import { BASE_URL, Methods, ServerErrorText, Route } from './data.js';
+import { BASE_URL, Methods, ServerErrorText, Route } from './constants.js';
 
 const load = (route, errorText, method = Methods.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
