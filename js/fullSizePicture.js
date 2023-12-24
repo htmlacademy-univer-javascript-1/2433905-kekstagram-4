@@ -1,5 +1,6 @@
 import { isEscapeKey } from './utils.js';
-const COMMENTS_STEP = 5;
+import { COMMENTS_STEP } from './constants.js';
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const pictureCloseButton = bigPicture.querySelector('.big-picture__cancel');
@@ -99,3 +100,4 @@ const showBigPicture = (picture) => {
 };
 
 export { showBigPicture };
+

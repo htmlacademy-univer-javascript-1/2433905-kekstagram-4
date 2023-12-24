@@ -1,7 +1,10 @@
 import { TAG_MAX_COUNT, VALID_CHARS, TagsErrorMessages, SubmitButtonElementText, FILE_TYPES } from './constants.js';
 import { resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
-import { isEscapeKey } from './utils.js';
+import { isEscapeKey, showAlert } from './utils.js';
+import { showErrorMessage, showSuccessMessage } from './message-form.js';
+import { sendData } from './api.js';
+
 const body = document.querySelector('body');
 const uploadFormElement = document.querySelector('.img-upload__form');
 const uploadFileElement = uploadFormElement.querySelector('#upload-file');
@@ -68,11 +71,11 @@ const hideImageModal = () => {
   buttonCloseOverlayElement.removeEventListener('click', hideImageModal);
 };
 
-const documentOnKeydown = (evt) => {
+const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideImageModal();
-    document.removeEventListener('keydown', documentOnKeydown);
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
@@ -82,7 +85,7 @@ const showImageModal = () => {
   resetScale();
 
   buttonCloseOverlayElement.addEventListener('click', hideImageModal);
-  document.addEventListener('keydown', documentOnKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 commentsFieldElement.addEventListener('keydown', (evt) => {
@@ -107,14 +110,24 @@ const unblockSubmitButton = () => {
   buttonCloseOverlayElement.textContent = SubmitButtonElementText.IDLE;
 };
 
-const formOnSubmit = (callback) => {
-  uploadFormElement.addEventListener('submit', async (evt) => {
+const onFormSubmit = () => {
+  uploadFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
+      const formData = new FormData(evt.target);
       blockSubmitButton();
-      await callback(new FormData(uploadFormElement));
-      unblockSubmitButton();
+      sendData(formData)
+        .then(() => {
+          hideImageModal();
+          showSuccessMessage();
+        })
+        .catch(() => {
+          hideImageModal();
+          showErrorMessage();
+          showAlert('Данные не отправились');
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };
@@ -136,10 +149,10 @@ const showImage = () => {
   }
 };
 
-const uploadOnChange = () => {
+const onUploadChange = () => {
   showImage();
 };
 
-uploadFileElement.addEventListener('change', uploadOnChange);
+uploadFileElement.addEventListener('change', onUploadChange);
 
-export { formOnSubmit, hideImageModal };
+export { onFormSubmit, showImageModal };

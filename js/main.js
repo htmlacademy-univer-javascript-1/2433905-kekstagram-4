@@ -1,23 +1,18 @@
 import { renderPictures } from './miniature.js';
-import { getData, sendData } from './api.js';
-import { showSuccessMessage, showErrorMessage } from './message-form.js';
+import { getData } from './api.js';
 import './scale.js';
-import { formOnSubmit, hideImageModal } from './form.js';
+import { onFormSubmit } from './form.js';
 import './effects.js';
 import { showFilters } from './filter.js';
+import { showAlert } from './utils.js';
 
-formOnSubmit(async (data) => {
-  try {
-    await sendData(data);
-    hideImageModal();
-    showSuccessMessage();
-  } catch (error) {
-    showErrorMessage();
-  }
-});
+onFormSubmit();
 
 getData().then((data) => {
   renderPictures(data);
   showFilters(data);
+}).catch(() => {
+  showAlert('Данные не загрузились с сервера');
 });
+
 

@@ -3,6 +3,10 @@ const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 const DEFAULT_SCALE = 100;
 const TAG_MAX_COUNT = 5;
+const PICTURES_COUNT = 10;
+const COMMENTS_STEP = 5;
+
+const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -65,8 +69,6 @@ const Effects = {
   }
 };
 
-const BASE_URL = 'https://29.javascript.pages.academy/kekstagram';
-
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -78,8 +80,8 @@ const Methods = {
 };
 
 const ServerErrorText = {
-  GET_DATA: '',
-  SEND_DATA: '',
+  GET_DATA: 'Данные не загрузились с сервера',
+  SEND_DATA: 'Данные не отправились. Попробуйте ещё раз',
 };
 
 const SubmitButtonElementText = {
@@ -87,12 +89,10 @@ const SubmitButtonElementText = {
   SENDING: 'Сохраняю...'
 };
 
-const PICTURES_COUNT = 10;
-
 const Filters = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
 
-export {  VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects, Methods, Route, BASE_URL, ServerErrorText, SubmitButtonElementText, PICTURES_COUNT, Filters, FILE_TYPES };
+export { VALID_CHARS, TAG_MAX_COUNT, TagsErrorMessages, SCALE_STEP, DEFAULT_SCALE, MIN_SCALE, MAX_SCALE, Effects, Methods, Route, BASE_URL, ServerErrorText, SubmitButtonElementText, PICTURES_COUNT, Filters, FILE_TYPES, COMMENTS_STEP };
