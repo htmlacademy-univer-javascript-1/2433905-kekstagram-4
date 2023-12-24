@@ -48,3 +48,4 @@ const showFilters = (loadedPictures) => {
 };
 
 export { showFilters };
+

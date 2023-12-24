@@ -4,7 +4,7 @@ const load = (route, errorText, method = Methods.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, { method, body })
     .then((response) => {
       if (!response.ok) {
-        throw new Error();
+        throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
       }
       return response.json();
     })
@@ -14,8 +14,6 @@ const load = (route, errorText, method = Methods.GET, body = null) =>
 
 const getData = () => load(Route.GET_DATA, ServerErrorText.GET_DATA);
 
-const sendData = (body) => {
-  load(Route.SEND_DATA, ServerErrorText.POST_DATA, Methods.POST, body);
-};
+const sendData = (body) => load(Route.SEND_DATA, ServerErrorText.SEND_DATA, Methods.POST, body);
 
 export { getData, sendData };

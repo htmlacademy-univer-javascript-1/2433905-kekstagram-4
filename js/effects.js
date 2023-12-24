@@ -42,8 +42,7 @@ const onEffectsChange = (evt) => {
   }
 };
 
-
-const onUpdateValueSlider = () => {
+const onSliderUpdate = () => {
   const sliderValue = effectLevelSliderElement.noUiSlider.get();
   if (currentEffect === Effects.NONE) {
     imageUploadPreviewElement.style.filter = Effects.NONE.style;
@@ -73,6 +72,6 @@ noUiSlider.create(effectLevelSliderElement, {
 });
 
 effectsFormElement.addEventListener('change', onEffectsChange);
-effectLevelSliderElement.noUiSlider.on('update', onUpdateValueSlider);
+effectLevelSliderElement.noUiSlider.on('update', onSliderUpdate);
 
 export { resetEffects };
